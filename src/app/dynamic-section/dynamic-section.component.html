@@ -1,0 +1,38 @@
+<div class="container">
+  <!-- ปุ่มเพิ่ม Section ไว้ด้านบน -->
+  <button (click)="addSection()">+ Section</button>
+
+  <div
+    *ngFor="let section of sections.controls; let sectionIndex = index"
+    class="section"
+  >
+    <h3>Section {{ sectionIndex + 1 }}</h3>
+
+    <div
+      *ngFor="
+        let input of getInputs(sectionIndex).controls;
+        let inputIndex = index
+      "
+      class="input-group"
+    >
+      <input [formControl]="input" type="number" placeholder="Enter value" />
+      <button
+        (click)="removeInput(sectionIndex, inputIndex)"
+        [disabled]="getInputs(sectionIndex).length <= 1"
+      >
+        -
+      </button>
+    </div>
+    <br />
+
+    <button (click)="addInput(sectionIndex)">Add Input</button>
+    <button
+      (click)="removeSection(sectionIndex)"
+      [disabled]="sections.length <= 1"
+    >
+      Remove Section
+    </button>
+
+    <div class="result">Result: {{ getTotal(sectionIndex) }}</div>
+  </div>
+</div>
